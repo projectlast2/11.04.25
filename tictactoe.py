@@ -35,12 +35,34 @@ class TicTacToe(QWidget):
         if self.board[x][y] is None:
             self.board[x][y]= "X"
         self.buttons[x][y].setText("X")
+        self.check_winner("X")
+
+    def check_winner(self, player):
+        for row in self.board:
+            if all(cell == player for cell in row):
+                #print(f"{player}won")
+                return True
+        for i in range(3):
+            if all(self.board[j][i] == player for j in range(3)):
+                #print(f"{player}won")
+                return True
+
+        if all(self.board[i][i] == player for i in range(3)) \
+            or all(self.board[i][2-i]== player for i in range(3)):
+            #print(f"{player}won")
+            return True
 
 
-        btns = []
-        for _ in range(3):
-            for _ in range(3):
-                btns.append(QPushButton(""))
+
+        return False
+
+
+
+    def is_cell_full(self):
+            if all(all(cell is not None for cell in row) for row in self.board):
+                return True
+            else:
+                return False
 
 
 if __name__ == "__main__":
